@@ -13,7 +13,7 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ChatPage(),
+      home: LoginPage(),
     );
   }
 }
