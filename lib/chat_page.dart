@@ -29,88 +29,97 @@ class ChatPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Container(
-            padding: const EdgeInsets.all(24),
-            margin: const EdgeInsets.all(50),
-            decoration: const BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              margin: const EdgeInsets.all(50),
+              decoration: const BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Hi there!',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Hi there!',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Image.network(
-                  'https://picsum.photos/250?image=9',
-                  height: 200,
-                ),
-              ],
+                  Image.network(
+                    'https://picsum.photos/250?image=9',
+                    height: 200,
+                  ),
+                ],
+              ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(24),
-            margin: const EdgeInsets.all(50),
-            decoration: const BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              margin: const EdgeInsets.all(50),
+              decoration: const BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Hi there!',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Hi there!',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Image.network(
-                  'https://picsum.photos/250?image=9',
-                  height: 200,
-                ),
-              ],
+                  Image.network(
+                    'https://picsum.photos/250?image=9',
+                    height: 200,
+                  ),
+                ],
+              ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(24),
-            margin: const EdgeInsets.all(50),
-            decoration: const BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              margin: const EdgeInsets.all(50),
+              decoration: const BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Hi there!',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Hi there!',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Image.network(
-                  'https://picsum.photos/250?image=9',
-                  height: 200,
-                ),
-              ],
+                  Image.network(
+                    'https://picsum.photos/250?image=9',
+                    height: 200,
+                  ),
+                ],
+              ),
             ),
           ),
           Container(
@@ -122,6 +131,7 @@ class ChatPage extends StatelessWidget {
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   onPressed: () {},
