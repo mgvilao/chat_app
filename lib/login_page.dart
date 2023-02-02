@@ -5,11 +5,14 @@ class LoginPage extends StatelessWidget {
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   void loginUser() {
-    print(usernameController.text);
-    print(passwordController.text);
-    print('User successfully logged in.');
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      print('User successfully logged in.');
+    } else {
+      print('Login failed!');
+    }
   }
 
   @override
@@ -45,22 +48,46 @@ class LoginPage extends StatelessWidget {
                 'https://picsum.photos/250?image=9',
                 height: 200,
               ),
-              TextField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  hintText: 'Username',
-                  hintStyle: TextStyle(color: Colors.blueGrey),
-                  border: OutlineInputBorder(),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        if (value != null &&
+                            value.isNotEmpty &&
+                            value.length < 5) {
+                          return "Your username must contain more than 5 characters";
+                        } else if (value != null && value.isEmpty) {
+                          return "Please, enter your username";
+                        }
+
+                        return null;
+                      },
+                      controller: usernameController,
+                      decoration: const InputDecoration(
+                        hintText: 'Username',
+                        hintStyle: TextStyle(color: Colors.blueGrey),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        hintText: 'Password',
+                        hintStyle: TextStyle(color: Colors.blueGrey),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: TextStyle(color: Colors.blueGrey),
-                  border: OutlineInputBorder(),
-                ),
+              const SizedBox(
+                height: 24,
               ),
               ElevatedButton(
                 onPressed: loginUser,
