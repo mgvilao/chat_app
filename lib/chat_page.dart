@@ -3,7 +3,8 @@ import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+  final String username;
+  const ChatPage({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +12,9 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'Hello Mike',
-          style: TextStyle(
+        title: Text(
+          'Hello $username',
+          style: const TextStyle(
             color: Colors.black,
           ),
         ),
