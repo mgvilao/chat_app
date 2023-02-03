@@ -3,6 +3,7 @@ import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -10,6 +11,7 @@ class LoginPage extends StatelessWidget {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final String _mainUrl = 'https://www.google.com';
 
   void loginUser(context) {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
@@ -96,9 +98,10 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  // todo: navigate user to url
-                  print('tapped');
+                onTap: () async {
+                  if (!await launch(_mainUrl)) {
+                    throw Exception('Could not launch the url ');
+                  }
                 },
                 child: Column(
                   children: const [
