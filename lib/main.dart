@@ -13,7 +13,12 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.black,
+        ),
+      ),
       home: LoginPage(),
     );
   }

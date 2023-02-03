@@ -20,6 +20,7 @@ class ChatPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
+              Navigator.pop(context);
               print('Logging out');
             },
             icon: const Icon(
@@ -43,7 +44,7 @@ class ChatPage extends StatelessWidget {
               },
             ),
           ),
-          const ChatInput(),
+          ChatInput(),
         ],
       ),
     );
