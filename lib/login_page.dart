@@ -1,4 +1,6 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/utils/textfield_styles.dart';
+import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -58,7 +60,8 @@ class LoginPage extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
+                    LoginTextField(
+                      hintText: 'Username',
                       validator: (value) {
                         if (value != null &&
                             value.isNotEmpty &&
@@ -71,23 +74,14 @@ class LoginPage extends StatelessWidget {
                         return null;
                       },
                       controller: usernameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Username',
-                        hintStyle: TextStyle(color: Colors.blueGrey),
-                        border: OutlineInputBorder(),
-                      ),
                     ),
                     const SizedBox(
                       height: 24,
                     ),
-                    TextFormField(
+                    LoginTextField(
                       controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.blueGrey),
-                        border: OutlineInputBorder(),
-                      ),
+                      hintText: 'Password',
+                      mustObscure: true,
                     ),
                   ],
                 ),
