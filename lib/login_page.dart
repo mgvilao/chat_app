@@ -1,4 +1,5 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +54,7 @@ class LoginPage extends StatelessWidget {
               //   'https://picsum.photos/250?image=9',
               //   height: 200,
               // ),
-              const SizedBox(
-                height: 10,
-              ),
+              verticalSpacing(10),
               Form(
                 key: _formKey,
                 child: Column(
@@ -75,9 +74,7 @@ class LoginPage extends StatelessWidget {
                       },
                       controller: usernameController,
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
+                    verticalSpacing(24),
                     LoginTextField(
                       controller: passwordController,
                       hintText: 'Password',
@@ -86,9 +83,7 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              verticalSpacing(24),
               ElevatedButton(
                 onPressed: () {
                   loginUser(context);
