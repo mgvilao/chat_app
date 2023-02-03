@@ -50,11 +50,10 @@ class LoginPage extends StatelessWidget {
                   color: Colors.blue,
                 ),
               ),
-              // Image.network(
-              //   'https://picsum.photos/250?image=9',
-              //   height: 200,
-              // ),
-              verticalSpacing(10),
+              Image.asset(
+                'assets/illustration.png',
+                height: 200,
+              ),
               Form(
                 key: _formKey,
                 child: Column(
