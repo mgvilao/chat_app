@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:chat_app/models/image_model.dart';
+import 'package:http/http.dart' as http;
 import 'package:chat_app/models/chat_message.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
@@ -34,14 +35,32 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {});
   }
 
+  Future<List<ImageModel>> _getNetworkImages() async {
+    var endpoint = Uri.parse('https://pixelford.com/api2/images');
+    final response = await http.get(endpoint);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> decodedList = jsonDecode(response.body) as List;
+      final List<ImageModel> networkImages = decodedList.map((listIem) {
+        return ImageModel.fromJson(listIem);
+      }).toList();
+
+      return networkImages;
+    }
+
+    throw Exception('Call to API failed!');
+  }
+
   @override
   void initState() {
+    _getNetworkImages();
     _loadInitialMessages();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _getNetworkImages();
     final username = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
@@ -68,6 +87,15 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          FutureBuilder<List<ImageModel>>(
+              future: _getNetworkImages(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<ImageModel>> snapshot) {
+                if (snapshot.hasData) {
+                  return Image.network(snapshot.data![0].urlSmallSize);
+                }
+                return const CircularProgressIndicator();
+              }),
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
