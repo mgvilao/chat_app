@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:chat_app/models/image_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:chat_app/repository/image_repository.dart';
 import 'package:chat_app/models/chat_message.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({super.key});
+  const ChatPage({super.key});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -16,6 +16,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<ChatMessage> _messages = [];
+  final _imageRepository = ImageRepository();
 
   _loadInitialMessages() async {
     rootBundle.loadString('assets/mock_messages.json').then((response) {
@@ -35,32 +36,14 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {});
   }
 
-  Future<List<ImageModel>> _getNetworkImages() async {
-    var endpoint = Uri.parse('https://pixelford.com/api2/images');
-    final response = await http.get(endpoint);
-
-    if (response.statusCode == 200) {
-      final List<dynamic> decodedList = jsonDecode(response.body) as List;
-      final List<ImageModel> networkImages = decodedList.map((listIem) {
-        return ImageModel.fromJson(listIem);
-      }).toList();
-
-      return networkImages;
-    }
-
-    throw Exception('Call to API failed!');
-  }
-
   @override
   void initState() {
-    _getNetworkImages();
     _loadInitialMessages();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _getNetworkImages();
     final username = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +59,6 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/');
-              print('Logging out');
             },
             icon: const Icon(
               Icons.logout,
@@ -88,7 +70,7 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           FutureBuilder<List<ImageModel>>(
-              future: _getNetworkImages(),
+              future: _imageRepository.getNetworkImages(),
               builder: (BuildContext context,
                   AsyncSnapshot<List<ImageModel>> snapshot) {
                 if (snapshot.hasData) {
