@@ -1,4 +1,4 @@
-import 'package:chat_app/models/User.dart';
+import 'package:chat_app/models/user.dart';
 
 class ChatMessage {
   int id;
