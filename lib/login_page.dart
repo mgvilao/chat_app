@@ -3,6 +3,7 @@ import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
@@ -12,6 +13,8 @@ class LoginPage extends StatelessWidget {
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final String _mainUrl = 'https://www.google.com';
+  final String _linkedInUrl = 'https://linkedin.com';
+  final String _twitterUrl = 'https://twitter.com';
 
   void loginUser(context) {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
@@ -109,6 +112,29 @@ class LoginPage extends StatelessWidget {
                     Text('App website'),
                   ],
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SignInButton(
+                    Buttons.Twitter,
+                    mini: true,
+                    onPressed: () async {
+                      if (!await launch(_twitterUrl)) {
+                        throw Exception('Could not launch the url ');
+                      }
+                    },
+                  ),
+                  SignInButton(
+                    Buttons.LinkedIn,
+                    mini: true,
+                    onPressed: () async {
+                      if (!await launch(_linkedInUrl)) {
+                        throw Exception('Could not launch the url ');
+                      }
+                    },
+                  ),
+                ],
               ),
             ],
           ),
