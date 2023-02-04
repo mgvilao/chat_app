@@ -1,39 +1,143 @@
+import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/utils/spaces.dart';
+import 'package:chat_app/utils/textfield_styles.dart';
+import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final String _mainUrl = 'https://www.google.com';
+  final String _linkedInUrl = 'https://linkedin.com';
+  final String _twitterUrl = 'https://twitter.com';
+
+  void loginUser(context) {
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      Navigator.pushReplacementNamed(context, '/chat',
+          arguments: usernameController.text);
+      print('User successfully logged in.');
+    } else {
+      print('Login failed!');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Let\'s sign you in!',
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.brown,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Let\'s sign you in!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
               ),
-            ),
-            const Text(
-              'Welcome back! \nYou\'ve been missed!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.blue,
+              const Text(
+                'Welcome back! \nYou\'ve been missed!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                  color: Colors.blue,
+                ),
               ),
-            ),
-            Image.network(
-              'https://picsum.photos/250?image=9',
-              height: 200,
-            ),
-          ],
+              Image.asset(
+                'assets/illustration.png',
+                height: 200,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    LoginTextField(
+                      hintText: 'Username',
+                      validator: (value) {
+                        if (value != null &&
+                            value.isNotEmpty &&
+                            value.length < 5) {
+                          return "Your username must contain more than 5 characters";
+                        } else if (value != null && value.isEmpty) {
+                          return "Please, enter your username";
+                        }
+
+                        return null;
+                      },
+                      controller: usernameController,
+                    ),
+                    verticalSpacing(24),
+                    LoginTextField(
+                      controller: passwordController,
+                      hintText: 'Password',
+                      mustObscure: true,
+                    ),
+                  ],
+                ),
+              ),
+              verticalSpacing(24),
+              ElevatedButton(
+                onPressed: () {
+                  loginUser(context);
+                },
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  if (!await launch(_mainUrl)) {
+                    throw Exception('Could not launch the url ');
+                  }
+                },
+                child: Column(
+                  children: const [
+                    Text('Find us on'),
+                    Text('App website'),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SignInButton(
+                    Buttons.Twitter,
+                    mini: true,
+                    onPressed: () async {
+                      if (!await launch(_twitterUrl)) {
+                        throw Exception('Could not launch the url ');
+                      }
+                    },
+                  ),
+                  SignInButton(
+                    Buttons.LinkedIn,
+                    mini: true,
+                    onPressed: () async {
+                      if (!await launch(_linkedInUrl)) {
+                        throw Exception('Could not launch the url ');
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
