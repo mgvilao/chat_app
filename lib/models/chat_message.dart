@@ -19,6 +19,7 @@ class ChatMessage {
         id: messageJson['id'],
         text: messageJson['text'],
         createdAt: messageJson['createdAt'],
+        imageUrl: messageJson['image'],
         sender: User.fromJson(messageJson['sender']));
   }
 }

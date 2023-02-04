@@ -12,6 +12,8 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment: alignment,
       child: Container(
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.5),
         padding: const EdgeInsets.all(24),
         margin: const EdgeInsets.all(50),
         decoration: const BoxDecoration(
@@ -32,11 +34,11 @@ class ChatBubble extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            if(message.imageUrl != null) 
+            if (message.imageUrl != null)
               Image.network(
-                  '${message.imageUrl}',
-                  height: 200,
-                ),            
+                '${message.imageUrl}',
+                height: 200,
+              ),
           ],
         ),
       ),
