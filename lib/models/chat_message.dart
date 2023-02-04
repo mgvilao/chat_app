@@ -13,4 +13,12 @@ class ChatMessage {
       required this.createdAt,
       required this.sender,
       this.imageUrl});
+
+  factory ChatMessage.fromJson(Map<String, dynamic> messageJson) {
+    return ChatMessage(
+        id: messageJson['id'],
+        text: messageJson['text'],
+        createdAt: messageJson['createdAt'],
+        sender: User.fromJson(messageJson['sender']));
+  }
 }
