@@ -5,7 +5,29 @@ import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+  ChatPage({super.key});
+
+  final List<ChatMessage> _messages = [
+    ChatMessage(
+      id: 1,
+      text: 'Hi',
+      createdAt: 20230204,
+      sender: User(id: 1, username: 'mgvilao'),
+    ),
+    ChatMessage(
+      id: 2,
+      text: 'Heyyy',
+      createdAt: 20230204,
+      sender: User(id: 2, username: 'ednasvilao'),
+    ),
+    ChatMessage(
+      id: 1,
+      text: 'Here\'s what I\' up to',
+      createdAt: 20230204,
+      imageUrl: 'https://picsum.photos/250?image=9',
+      sender: User(id: 1, username: 'mgvilao'),
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +59,13 @@ class ChatPage extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ChatBubble(
-                  alignment: index % 2 == 0
-                      ? Alignment.centerLeft
-                      : Alignment.centerRight,
-                  message: ChatMessage(
-                    id: 1,
-                    text: 'Hey there!',
-                    createdAt: DateTime.now().millisecondsSinceEpoch,
-                    sender: User(id: 1, username: 'Mike'),
-                  ),
+                  alignment: _messages[index].sender.username == 'mgvilao'
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  message: _messages[index],
                 );
               },
             ),
