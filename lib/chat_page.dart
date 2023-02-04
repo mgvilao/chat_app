@@ -69,15 +69,6 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          FutureBuilder<List<ImageModel>>(
-              future: _imageRepository.getNetworkImages(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<ImageModel>> snapshot) {
-                if (snapshot.hasData) {
-                  return Image.network(snapshot.data![0].urlSmallSize);
-                }
-                return const CircularProgressIndicator();
-              }),
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
