@@ -20,15 +20,13 @@ class LoginPage extends StatelessWidget {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       Navigator.pushReplacementNamed(context, '/chat',
           arguments: usernameController.text);
-      print('User successfully logged in.');
-    } else {
-      print('Login failed!');
-    }
+    } else {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -55,10 +53,18 @@ class LoginPage extends StatelessWidget {
                   color: Colors.blue,
                 ),
               ),
-              Image.asset(
-                'assets/illustration.png',
+              verticalSpacing(24),
+              Container(
                 height: 200,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    image: const DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      image: AssetImage('assets/illustration.png'),
+                    ),
+                    borderRadius: BorderRadius.circular(12)),
               ),
+              verticalSpacing(24),
               Form(
                 key: _formKey,
                 child: Column(

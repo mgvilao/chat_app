@@ -1,6 +1,6 @@
 import 'dart:convert';
-
-import 'package:chat_app/models/User.dart';
+import 'package:chat_app/models/image_model.dart';
+import 'package:chat_app/repository/image_repository.dart';
 import 'package:chat_app/models/chat_message.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({super.key});
+  const ChatPage({super.key});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -16,16 +16,18 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<ChatMessage> _messages = [];
+  final _imageRepository = ImageRepository();
 
   _loadInitialMessages() async {
-    final response = await rootBundle.loadString('assets/mock_messages.json');
-    final List<dynamic> decodedList = jsonDecode(response) as List;
-    final List<ChatMessage> _chatMessages = decodedList.map((listIem) {
-      return ChatMessage.fromJson(listIem);
-    }).toList();
+    rootBundle.loadString('assets/mock_messages.json').then((response) {
+      final List<dynamic> decodedList = jsonDecode(response) as List;
+      final List<ChatMessage> chatMessages = decodedList.map((listIem) {
+        return ChatMessage.fromJson(listIem);
+      }).toList();
 
-    setState(() {
-      _messages = _chatMessages;
+      setState(() {
+        _messages = chatMessages;
+      });
     });
   }
 
@@ -44,6 +46,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final username = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -57,7 +60,6 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/');
-              print('Logging out');
             },
             icon: const Icon(
               Icons.logout,
