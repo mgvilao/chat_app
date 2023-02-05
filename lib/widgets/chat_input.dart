@@ -18,14 +18,15 @@ class _ChatInputState extends State<ChatInput> {
 
   String _selectedImageUrl = '';
 
-  void sendMessage() {
+  void sendMessage() async {
+    String? cachedUsername = await context.read<AuthService>().getUsername();
     final message = ChatMessage(
       id: 5,
       text: chatMessageController.text,
       createdAt: DateTime.now().millisecondsSinceEpoch,
       sender: User(
         id: 1,
-        username: context.read<AuthService>().getUsername(),
+        username: cachedUsername!,
       ),
     );
 

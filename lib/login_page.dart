@@ -1,9 +1,11 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
@@ -16,8 +18,9 @@ class LoginPage extends StatelessWidget {
   final String _linkedInUrl = 'https://linkedin.com';
   final String _twitterUrl = 'https://twitter.com';
 
-  void loginUser(context) {
+  Future<void> loginUser(BuildContext context) async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      await context.read!<AuthService>().loginUser(usernameController.text);
       Navigator.pushReplacementNamed(context, '/chat',
           arguments: usernameController.text);
     } else {}
@@ -95,8 +98,8 @@ class LoginPage extends StatelessWidget {
               ),
               verticalSpacing(24),
               ElevatedButton(
-                onPressed: () {
-                  loginUser(context);
+                onPressed: () async {
+                  await loginUser(context);
                 },
                 child: const Text(
                   'Login',
