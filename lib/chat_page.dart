@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:chat_app/models/image_model.dart';
 import 'package:chat_app/repository/image_repository.dart';
 import 'package:chat_app/models/chat_message.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -75,7 +77,8 @@ class _ChatPageState extends State<ChatPage> {
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ChatBubble(
-                  alignment: _messages[index].sender.username == 'mgvilao'
+                  alignment: _messages[index].sender.username ==
+                          context.read<AuthService>().getUsername()
                       ? Alignment.centerRight
                       : Alignment.centerLeft,
                   message: _messages[index],
