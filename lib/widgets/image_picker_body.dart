@@ -29,6 +29,11 @@ class ImagePickerBody extends StatelessWidget {
                       },
                       child: Image.network(snapshot.data![index].urlSmallSize));
                 });
+          } else if (snapshot.hasError) {
+            return Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text('ERROR: ${snapshot.error}'),
+            );
           }
           return const Padding(
             padding: EdgeInsets.all(8.0),
