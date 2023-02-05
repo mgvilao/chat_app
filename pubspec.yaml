@@ -17,6 +17,8 @@ dependencies:
   http: any
   flutter_signin_button: ^2.0.0
   json_serializable: ^6.6.1
+  provider: ^6.0.5
+  shared_preferences: ^2.0.17
 
 dev_dependencies:
   flutter_test:
