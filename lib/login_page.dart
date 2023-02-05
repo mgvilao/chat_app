@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
 
   Future<void> loginUser(BuildContext context) async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      await context.read!<AuthService>().loginUser(usernameController.text);
+      await context.read<AuthService>().loginUser(usernameController.text);
       Navigator.pushReplacementNamed(context, '/chat',
           arguments: usernameController.text);
     } else {}
