@@ -20,10 +20,7 @@ class LoginPage extends StatelessWidget {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       Navigator.pushReplacementNamed(context, '/chat',
           arguments: usernameController.text);
-      print('User successfully logged in.');
-    } else {
-      print('Login failed!');
-    }
+    } else {}
   }
 
   @override

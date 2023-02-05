@@ -25,12 +25,21 @@ class _ChatInputState extends State<ChatInput> {
     );
 
     widget.onSubmit(message);
+
+    if (_selectedImageUrl.isNotEmpty) {
+      message.imageUrl = _selectedImageUrl;
+    }
+
+    chatMessageController.clear();
+    _selectedImageUrl = '';
+    setState(() {});
   }
 
   void onImagedPicked(String imageUrl) {
     setState(() {
       _selectedImageUrl = imageUrl;
     });
+    Navigator.of(context).pop();
   }
 
   @override
@@ -51,7 +60,7 @@ class _ChatInputState extends State<ChatInput> {
                   context: context,
                   builder: (BuildContext context) {
                     return ImagePickerBody(
-                      onImageSelected: onImagedPicked(_selectedImageUrl),
+                      onImageSelected: onImagedPicked,
                     );
                   });
             },
@@ -62,6 +71,7 @@ class _ChatInputState extends State<ChatInput> {
           ),
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
                   textCapitalization: TextCapitalization.sentences,
@@ -80,7 +90,11 @@ class _ChatInputState extends State<ChatInput> {
                     border: InputBorder.none,
                   ),
                 ),
-                if (_selectedImageUrl.isNotEmpty) Image.network('src')
+                if (_selectedImageUrl.isNotEmpty)
+                  Image.network(
+                    _selectedImageUrl,
+                    height: 100,
+                  ),
               ],
             ),
           ),
