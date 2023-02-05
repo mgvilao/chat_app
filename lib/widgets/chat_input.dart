@@ -3,11 +3,18 @@ import 'package:chat_app/models/user.dart';
 import 'package:chat_app/widgets/image_picker_body.dart';
 import 'package:flutter/material.dart';
 
-class ChatInput extends StatelessWidget {
+class ChatInput extends StatefulWidget {
   final Function(ChatMessage) onSubmit;
   ChatInput({super.key, required this.onSubmit});
 
+  @override
+  State<ChatInput> createState() => _ChatInputState();
+}
+
+class _ChatInputState extends State<ChatInput> {
   final chatMessageController = TextEditingController();
+
+  String _selectedImageUrl = '';
 
   void sendMessage() {
     final message = ChatMessage(
@@ -17,13 +24,18 @@ class ChatInput extends StatelessWidget {
       sender: User(id: 1, username: 'mgvilao'),
     );
 
-    onSubmit(message);
+    widget.onSubmit(message);
+  }
+
+  void onImagedPicked(String imageUrl) {
+    setState(() {
+      _selectedImageUrl = imageUrl;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
       decoration: const BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.vertical(
@@ -38,7 +50,9 @@ class ChatInput extends StatelessWidget {
               showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
-                    return ImagePickerBody();
+                    return ImagePickerBody(
+                      onImageSelected: onImagedPicked(_selectedImageUrl),
+                    );
                   });
             },
             icon: const Icon(
@@ -47,22 +61,27 @@ class ChatInput extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: TextField(
-              textCapitalization: TextCapitalization.sentences,
-              keyboardType: TextInputType.multiline,
-              maxLines: 5,
-              minLines: 1,
-              controller: chatMessageController,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-              decoration: const InputDecoration(
-                hintText: "Message",
-                hintStyle: TextStyle(
-                  color: Colors.blueGrey,
+            child: Column(
+              children: [
+                TextField(
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  minLines: 1,
+                  controller: chatMessageController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: const InputDecoration(
+                    hintText: "Message",
+                    hintStyle: TextStyle(
+                      color: Colors.blueGrey,
+                    ),
+                    border: InputBorder.none,
+                  ),
                 ),
-                border: InputBorder.none,
-              ),
+                if (_selectedImageUrl.isNotEmpty) Image.network('src')
+              ],
             ),
           ),
           IconButton(

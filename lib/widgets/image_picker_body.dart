@@ -3,9 +3,8 @@ import 'package:chat_app/repository/image_repository.dart';
 import 'package:flutter/material.dart';
 
 class ImagePickerBody extends StatelessWidget {
-  ImagePickerBody({
-    super.key,
-  });
+  final Function(String) onImageSelected;
+  ImagePickerBody({super.key, required this.onImageSelected});
 
   final _imageRepository = ImageRepository();
 
@@ -24,9 +23,12 @@ class ImagePickerBody extends StatelessWidget {
                   maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
                 ),
                 itemBuilder: (context, index) {
-                  return Image.network(snapshot.data![index].urlSmallSize);
+                  return GestureDetector(
+                      onTap: () {
+                        onImageSelected(snapshot.data![index].urlSmallSize);
+                      },
+                      child: Image.network(snapshot.data![index].urlSmallSize));
                 });
-            //return Image.network(snapshot.data![0].urlSmallSize);
           }
           return const Padding(
             padding: EdgeInsets.all(8.0),
