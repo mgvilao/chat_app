@@ -15,11 +15,21 @@ class AuthService {
     }
   }
 
+  Future<bool> isLoggedIn() async {
+    String? username = await _prefs.getString('username');
+
+    if (username == null) {
+      return false;
+    }
+
+    return true;
+  }
+
   void logoutUser() {
     _prefs.clear();
   }
 
   String? getUsername() {
-    return _prefs.getString('username') ?? 'default';
+    return _prefs.getString('username');
   }
 }

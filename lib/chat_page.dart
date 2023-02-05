@@ -46,7 +46,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final username = ModalRoute.of(context)!.settings.arguments as String;
+    final username = context.watch<AuthService>().getUsername();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
